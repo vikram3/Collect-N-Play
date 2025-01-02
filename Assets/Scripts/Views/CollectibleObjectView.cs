@@ -1,16 +1,17 @@
 using UnityEngine;
+using System.Collections;
 
 public class CollectibleObjectView : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem collectEffect;
+    [SerializeField] private GameObject collectFXPrefab;
     private CollectibleObjectModel model;
     private SpriteRenderer spriteRenderer;
-    private Animator animator;
+    private GameViewModel gameViewModel;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
+        gameViewModel = FindObjectOfType<GameViewModel>();
     }
 
     public void Initialize(CollectibleObjectModel model)
@@ -21,19 +22,26 @@ public class CollectibleObjectView : MonoBehaviour
 
     private void OnMouseDown()
     {
-        FindObjectOfType<GameViewModel>().OnObjectCollected(model.ID);
-        PlayCollectEffect();
+        // Check if this object is in target objects before playing effect
+        bool isTarget = gameViewModel.IsTargetObject(model.ID);
+        if (isTarget)
+        {
+            PlayCollectEffect();
+        }
+        gameViewModel.OnObjectCollected(model.ID);
     }
 
     private void PlayCollectEffect()
     {
-        if (collectEffect != null)
+        // Particle effect
+        if (collectFXPrefab != null)
         {
-            collectEffect.Play();
+            GameObject fx = Instantiate(collectFXPrefab, transform.position, Quaternion.identity);
+            Destroy(fx, 2f);
         }
-        if (animator != null)
-        {
-            animator.SetTrigger("Collect");
-        }
+
+        // Scale animation
     }
+
+
 }

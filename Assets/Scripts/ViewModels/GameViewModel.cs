@@ -11,6 +11,7 @@ public class GameViewModel : MonoBehaviour
     [SerializeField] private AudioSource collectSound;
     [SerializeField] private AudioSource levelCompleteSound;
 
+
     private GameModel gameModel;
 
     private void Start()
@@ -83,7 +84,10 @@ public class GameViewModel : MonoBehaviour
     {
         return gameModel.TargetObjects.TrueForAll(x => x.CurrentCount == 0);
     }
-
+    public bool IsTargetObject(int objectId)
+    {
+        return gameModel.TargetObjects.Exists(x => x.ID == objectId);
+    }
     public void StartNextLevel()
     {
         gameModel.NextLevel();
