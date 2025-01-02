@@ -8,8 +8,7 @@ public class TargetRowView : MonoBehaviour
     [SerializeField] private GameObject targetObjectPrefab;
     [SerializeField] private Transform container;
     [SerializeField] private float spacing = 100f; // Space between targets
-    [SerializeField] private float startX = 0f;    // Starting X position
-    [SerializeField] private float targetSize = 80f; // Size of each target
+    [SerializeField] private float targetSize = 80f; // Size of each targset
 
     private Dictionary<int, TextMeshProUGUI> countTexts = new Dictionary<int, TextMeshProUGUI>();
 
