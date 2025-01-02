@@ -28,7 +28,7 @@ public class MainMenuManager : MonoBehaviour
     private void OnPlayClick()
     {
         PlayButtonSound();
-        SceneManager.LoadScene("GameScene"); // Your game scene name
+        SceneManager.LoadScene("Game"); // Your game scene name
     }
 
     private void OnQuitClick()
