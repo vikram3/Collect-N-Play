@@ -2015,11 +2015,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a86cfc4f5f10b42be7d3c6b22708ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playButton: {fileID: 0}
-  quitButton: {fileID: 0}
-  instructionsButton: {fileID: 0}
-  instructionsPanel: {fileID: 0}
-  buttonClickSound: {fileID: 0}
+  playButton: {fileID: 1358404898}
+  quitButton: {fileID: 1567389443}
+  instructionsButton: {fileID: 1972571785}
+  instructionsPanel: {fileID: 1972571783}
+  buttonClickSound: {fileID: 274578114}
   backgroundMusic: {fileID: 0}
 --- !u!114 &1277294011
 MonoBehaviour:

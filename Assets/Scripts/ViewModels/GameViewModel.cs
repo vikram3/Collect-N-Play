@@ -11,7 +11,6 @@ public class GameViewModel : MonoBehaviour
     [SerializeField] private AudioSource collectSound;
     [SerializeField] private AudioSource levelCompleteSound;
 
-
     private GameModel gameModel;
 
     private void Start()
@@ -84,17 +83,15 @@ public class GameViewModel : MonoBehaviour
     {
         return gameModel.TargetObjects.TrueForAll(x => x.CurrentCount == 0);
     }
+
     public bool IsTargetObject(int objectId)
     {
         return gameModel.TargetObjects.Exists(x => x.ID == objectId);
     }
+
     public void StartNextLevel()
     {
-        gameModel.NextLevel();
-        InitializeRows();
-        UpdateTargetRow();
-        uiView.HideNextLevel();
-        uiView.UpdateLevel(gameModel.CurrentLevel);
+        RestartGame(); // Call the RestartGame method to reset the game.
     }
 
     public void RestartGame()
@@ -103,5 +100,6 @@ public class GameViewModel : MonoBehaviour
         InitializeRows();
         UpdateTargetRow();
         uiView.UpdateLevel(gameModel.CurrentLevel);
+        uiView.HideNextLevel();
     }
 }
