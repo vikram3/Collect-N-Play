@@ -24,8 +24,23 @@ public class GameUIManager : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource successSound;
     [SerializeField] private AudioSource failureSound;
+    [SerializeField] private AudioSource backgroundMusic;
+
+    [Header("Pause & Mute")]
+    [SerializeField] private Button pauseButton;
+    [SerializeField] private Image pauseButtonImage;
+    [SerializeField] private Sprite playSprite;
+    [SerializeField] private Sprite pauseSprite;
+
+    [Header("Music Toggle")]
+    [SerializeField] private Button musicToggleButton;
+    [SerializeField] private Image musicToggleButtonImage;
+    [SerializeField] private Sprite musicOnSprite;
+    [SerializeField] private Sprite musicOffSprite;
 
     private GameViewModel gameViewModel;
+    private bool isPaused = false;
+    private bool isMusicOn = true;
 
     private void Start()
     {
@@ -44,6 +59,16 @@ public class GameUIManager : MonoBehaviour
         if (nextLevelButton != null)
         {
             nextLevelButton.onClick.AddListener(OnNextLevelClicked);
+        }
+
+        if (pauseButton != null)
+        {
+            pauseButton.onClick.AddListener(OnPauseClicked);
+        }
+
+        if (musicToggleButton != null)
+        {
+            musicToggleButton.onClick.AddListener(OnMusicToggleClicked);
         }
     }
 
@@ -113,4 +138,33 @@ public class GameUIManager : MonoBehaviour
         gameViewModel.RestartGame();
         gameOverPanel.SetActive(false);
     }
+
+    private void OnPauseClicked()
+    {
+        isPaused = !isPaused;
+        gameViewModel.PauseGame(isPaused);
+        gameViewModel.MuteAudio(isPaused); // Mute when paused
+
+        pauseButtonImage.sprite = isPaused ? playSprite : pauseSprite; // Toggle sprite
+    }
+
+    private void OnMusicToggleClicked()
+    {
+        isMusicOn = !isMusicOn;
+        if (backgroundMusic != null)
+        {
+            backgroundMusic.mute = !isMusicOn; // Toggle mute state
+            Debug.Log($"Music is now {(isMusicOn ? "ON" : "OFF")}");
+        }
+
+        if (musicToggleButtonImage != null)
+        {
+            musicToggleButtonImage.sprite = isMusicOn ? musicOnSprite : musicOffSprite; // Toggle button sprite
+        }
+        else
+        {
+            Debug.LogWarning("Music toggle button image reference is missing!");
+        }
+    }
+
 }

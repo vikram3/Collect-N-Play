@@ -102,4 +102,14 @@ public class GameViewModel : MonoBehaviour
         gameUIManager.UpdateLevel(gameModel.CurrentLevel);
         gameUIManager.HideNextLevel();
     }
+
+    public void MuteAudio(bool mute)
+    {
+        AudioListener.pause = mute;
+    }
+
+    public void PauseGame(bool pause)
+    {
+        Time.timeScale = pause ? 0f : 1f;
+    }
 }
