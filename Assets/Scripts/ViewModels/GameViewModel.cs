@@ -6,7 +6,7 @@ public class GameViewModel : MonoBehaviour
     [SerializeField] private List<Sprite> objectSprites;
     [SerializeField] private RowView[] rowViews;
     [SerializeField] private TargetRowView targetRowView;
-    [SerializeField] private UIView uiView;
+    [SerializeField] private GameUIManager gameUIManager;
     [SerializeField] private float[] rowSpeeds = { 1f, 2f, 3f, 4f };
     [SerializeField] private AudioSource collectSound;
     [SerializeField] private AudioSource levelCompleteSound;
@@ -24,7 +24,7 @@ public class GameViewModel : MonoBehaviour
         gameModel = new GameModel(objectSprites);
         InitializeRows();
         UpdateTargetRow();
-        uiView.UpdateLevel(gameModel.CurrentLevel);
+        gameUIManager.UpdateLevel(gameModel.CurrentLevel);
     }
 
     private void Update()
@@ -33,11 +33,11 @@ public class GameViewModel : MonoBehaviour
         {
             gameModel.UpdateTimer(Time.deltaTime);
             UpdateRows();
-            uiView.UpdateTimer(gameModel.TimeRemaining);
+            gameUIManager.UpdateTimer(gameModel.TimeRemaining);
 
             if (gameModel.TimeRemaining <= 0)
             {
-                uiView.ShowGameOver();
+                gameUIManager.ShowGameOverPanel(gameModel.CurrentLevel);
             }
         }
     }
@@ -74,7 +74,7 @@ public class GameViewModel : MonoBehaviour
             if (CheckWinCondition())
             {
                 if (levelCompleteSound != null) levelCompleteSound.Play();
-                uiView.ShowNextLevel();
+                gameUIManager.ShowNextLevelPanel(gameModel.CurrentLevel);
             }
         }
     }
@@ -99,7 +99,7 @@ public class GameViewModel : MonoBehaviour
         gameModel.RestartGame();
         InitializeRows();
         UpdateTargetRow();
-        uiView.UpdateLevel(gameModel.CurrentLevel);
-        uiView.HideNextLevel();
+        gameUIManager.UpdateLevel(gameModel.CurrentLevel);
+        gameUIManager.HideNextLevel();
     }
 }
